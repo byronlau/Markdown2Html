@@ -30,10 +30,10 @@ jobs:
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
-          external_repository: shenweiyan/Markdown2Html
+          external_repository: byronlau/Markdown2Html
           personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}     
           publish_dir: ./build
           publish_branch: gh-pages
           force_orphan: true
           full_commit_message: ${{ github.event.head_commit.message }}
-          cname: 'md.weiyan.dev'
+          cname: 'md.1218.fun'
