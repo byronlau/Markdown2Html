@@ -1,8 +1,8 @@
 import * as keyEvents from "./editorKeyEvents";
-import {isPlatformWindows} from "./helper";
+import { isPlatformWindows } from "./helper";
 
 const handlePressHotkey = (type, content) => {
-  const {markdownEditor} = content;
+  const { markdownEditor } = content;
   const selection = markdownEditor.getSelection();
   switch (type) {
     case "Bold":
@@ -29,6 +29,15 @@ const handlePressHotkey = (type, content) => {
     case "H3":
       keyEvents.h3(markdownEditor, selection);
       break;
+    case "UnderLine":
+      keyEvents.underline(markdownEditor, selection);
+      break;
+    case "DashedUnderLine":
+      keyEvents.dashedUnderline(markdownEditor, selection);
+      break;
+    case "HighLight":
+      keyEvents.highlight(markdownEditor, selection);
+      break;
     default:
       return;
   }
@@ -43,11 +52,23 @@ const bindHotkeys = (content, dialog) =>
         "Ctrl-B": () => {
           handlePressHotkey("Bold", content);
         },
-        "Ctrl-U": () => {
+        "Ctrl-Q": () => {
           handlePressHotkey("Del", content);
         },
         "Ctrl-I": () => {
           handlePressHotkey("Italic", content);
+        },
+        "Ctrl-U": () => {
+          handlePressHotkey("UnderLine", content);
+        },
+        "Ctrl-Shift-U": () => {
+          handlePressHotkey("DashedUnderLine", content);
+        },
+        "Ctrl-Shift-1": () => {
+          handlePressHotkey("Center", content);
+        },
+        "Ctrl-H": () => {
+          handlePressHotkey("HighLight", content);
         },
         "Ctrl-Alt-C": () => {
           handlePressHotkey("Code", content);
@@ -84,17 +105,29 @@ const bindHotkeys = (content, dialog) =>
         },
         "Ctrl-F": () => {
           dialog.setSearchOpen(!dialog.isSearchOpen);
-        },
+        }
       }
     : {
         "Cmd-B": () => {
           handlePressHotkey("Bold", content);
         },
-        "Cmd-U": () => {
+        "Cmd-Q": () => {
           handlePressHotkey("Del", content);
         },
         "Cmd-I": () => {
           handlePressHotkey("Italic", content);
+        },
+        "Cmd-U": () => {
+          handlePressHotkey("UnderLine", content);
+        },
+        "Cmd-Shift-U": () => {
+          handlePressHotkey("DashedUnderLine", content);
+        },
+        "Cmd-Shift-1": () => {
+          handlePressHotkey("Center", content);
+        },
+        "Cmd-H": () => {
+          handlePressHotkey("HighLight", content);
         },
         "Cmd-Alt-C": () => {
           handlePressHotkey("Code", content);
@@ -131,14 +164,18 @@ const bindHotkeys = (content, dialog) =>
         },
         "Cmd-F": () => {
           dialog.setSearchOpen(!dialog.isSearchOpen);
-        },
+        }
       };
 
 export const hotKeys = isPlatformWindows
   ? {
       bold: "Ctrl+B",
-      del: "Ctrl+U",
+      del: "Ctrl+D",
       italic: "Ctrl+I",
+      underline: "Ctrl+U",
+      dashedUnderline: "Ctrl+Shift+U",
+      center: "Ctrl+Shift+1",
+      highLight: "Ctrl+H",
       code: "Ctrl+Alt+C",
       inlineCode: "Ctrl+Alt+V",
       link: "Ctrl+K",
@@ -146,12 +183,16 @@ export const hotKeys = isPlatformWindows
       form: "Ctrl+Alt+T",
       format: "Ctrl+Alt+F",
       linkToFoot: "Ctrl+Alt+L",
-      search: "Ctrl+F",
+      search: "Ctrl+F"
     }
   : {
       bold: "⌘B",
-      del: "⌘U",
+      del: "⌘D",
       italic: "⌘I",
+      underline: "⌘U",
+      dashedUnderline: "⌥⌘U",
+      center: "⌥⌘1",
+      highLight: "⌘H",
       code: "⌥⌘C",
       inlineCode: "⌥⌘V",
       link: "⌘K",
@@ -159,37 +200,41 @@ export const hotKeys = isPlatformWindows
       form: "⌥⌘T",
       format: "⌥⌘F",
       linkToFoot: "⌥⌘L",
-      search: "⌘F",
+      search: "⌘F"
     };
 
-export const betterTab = (cm) => {
+export const betterTab = cm => {
   if (cm.somethingSelected()) {
     cm.indentSelection("add");
   } else {
     cm.replaceSelection(
-      cm.getOption("indentWithTabs") ? "\t" : Array(cm.getOption("indentUnit") + 1).join(" "),
+      cm.getOption("indentWithTabs")
+        ? "\t"
+        : Array(cm.getOption("indentUnit") + 1).join(" "),
       "end",
-      "+input",
+      "+input"
     );
   }
 };
 
-export const rightClick = (cm) => {
+export const rightClick = cm => {
   const ele = document.getElementById("nice-md-editor");
-  ele.oncontextmenu = (e) => {
+  ele.oncontextmenu = e => {
     const element = document.getElementById("nice-editor-menu");
     element.style.display = "block";
     // event--ie  ev--其他浏览器
     const oEvent = window.event || window.ev;
     // documentElement--其他游览器    body--谷歌
-    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    const scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
     // 菜单的style样式跟随鼠标的位置
     element.style.top = oEvent.clientY + scrollTop + "px";
-    const scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+    const scrollLeft =
+      document.documentElement.scrollLeft || document.body.scrollLeft;
     element.style.left = oEvent.clientX + scrollLeft + "px";
     return false;
   };
-  window.onclick = (e) => {
+  window.onclick = e => {
     const element = document.getElementById("nice-editor-menu");
     element.style.display = "none";
   };

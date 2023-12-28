@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Menu, Dropdown} from "antd";
+import React, { Component } from "react";
+import { Menu, Dropdown } from "antd";
 
 import Bold from "./Pattern/Bold";
 import Code from "./Pattern/Code";
@@ -12,6 +12,10 @@ import Format from "./Pattern/Format";
 import LinkToFoot from "./Pattern/LinkToFoot";
 import Font from "./Pattern/Font";
 import InlineCode from "./Pattern/InlineCode";
+import UnderLine from "./Pattern/UnderLine";
+import DashedUnderLine from "./Pattern/DashedUnderLine";
+import Center from "./Pattern/Center";
+import HighLight from "./Pattern/HighLight";
 
 import "./common.css";
 
@@ -25,6 +29,18 @@ const menu = (
     </Menu.Item>
     <Menu.Item>
       <Italic />
+    </Menu.Item>
+    <Menu.Item>
+      <UnderLine />
+    </Menu.Item>
+    <Menu.Item>
+      <DashedUnderLine />
+    </Menu.Item>
+    <Menu.Item>
+      <Center />
+    </Menu.Item>
+    <Menu.Item>
+      <HighLight />
     </Menu.Item>
     <Menu.Item>
       <Code />
@@ -62,7 +78,11 @@ const menu = (
 class Pattern extends Component {
   render() {
     return (
-      <Dropdown overlay={menu} trigger={["click"]} overlayClassName="nice-overlay">
+      <Dropdown
+        overlay={menu}
+        trigger={["click"]}
+        overlayClassName="nice-overlay"
+      >
         <a id="nice-menu-pattern" className="nice-menu-link" href="#">
           格式
         </a>

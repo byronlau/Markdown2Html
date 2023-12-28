@@ -1,6 +1,6 @@
 import React from "react";
 
-export default ({className = "icon"}) => (
+export default ({ className = "icon" }) => (
   <svg
     t="1599631505877"
     className="icon"

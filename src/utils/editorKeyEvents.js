@@ -1,10 +1,10 @@
-import {message} from "antd";
+import { message } from "antd";
 import prettier from "prettier/standalone";
 import prettierMarkdown from "prettier/parser-markdown";
 
 const wrapChar = /windows|win32/i.test(navigator.userAgent) ? "\r\n" : "\n";
 
-const handleWechatOuterLink = (content) => {
+const handleWechatOuterLink = content => {
   const linkImgReg = /(!)*\[.*?\]\(((?!mp.weixin.qq.com).)*?\)/g;
   const res = content.match(linkImgReg); // 匹配到图片、链接和脚注
 
@@ -13,7 +13,7 @@ const handleWechatOuterLink = (content) => {
   }
 
   const footReg = /.*?\(.*?"(.*?)".*?\)/;
-  const filterRes = res.filter((val) => {
+  const filterRes = res.filter(val => {
     const comment = val.match(footReg);
     if (val[0] === "!") {
       return false;
@@ -25,7 +25,7 @@ const handleWechatOuterLink = (content) => {
   }); // 过滤掉图片和脚注
 
   if (filterRes.length > 0) {
-    filterRes.forEach((val) => {
+    filterRes.forEach(val => {
       const linkReg = /\[(.*?)\]\((.*?)\)/; // 匹配链接中具体的值
       const matchValue = val.match(linkReg);
       const name = matchValue[1];
@@ -48,10 +48,10 @@ export const parseLinkToFoot = (content, store) => {
   message.success("微信外链转脚注完成！");
 };
 
-const handlePrettierDoc = (content) => {
+const handlePrettierDoc = content => {
   const prettierRes = prettier.format(content, {
     parser: "markdown",
-    plugins: [prettierMarkdown],
+    plugins: [prettierMarkdown]
   });
   return prettierRes;
 };
@@ -86,7 +86,9 @@ export const italic = (editor, selection) => {
 };
 
 export const code = (editor, selection) => {
-  editor.replaceSelection(`${wrapChar}\`\`\`${wrapChar}${selection}${wrapChar}\`\`\`${wrapChar}`);
+  editor.replaceSelection(
+    `${wrapChar}\`\`\`${wrapChar}${selection}${wrapChar}\`\`\`${wrapChar}`
+  );
   const cursor = editor.getCursor();
   cursor.line -= 2;
   editor.setCursor(cursor);
@@ -109,4 +111,25 @@ export const h2 = (editor, selection) => {
 
 export const h3 = (editor, selection) => {
   editor.replaceSelection(`### ${selection}`);
+};
+
+export const underline = (editor, selection) => {
+  editor.replaceSelection(`<u> ${selection} </u>`);
+};
+export const dashedUnderline = (editor, selection) => {
+  editor.replaceSelection(
+    `<span style="display: inline; border-bottom: 1px dashed #000; padding-bottom: 1px;"> ${selection} </span>`
+  );
+};
+
+export const center = (editor, selection) => {
+  editor.replaceSelection(
+    `<span style="text-align: center;"> ${selection} </span>`
+  );
+};
+
+export const highlight = (editor, selection) => {
+  editor.replaceSelection(
+    `<span style="background-color: yellow; padding: 5px;"> ${selection} </span>`
+  );
 };

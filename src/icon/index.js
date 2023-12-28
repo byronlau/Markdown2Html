@@ -31,8 +31,12 @@ import Italic from "./Italic";
 import Link from "./Link";
 import Quote from "./Quote";
 import Table from "./Table";
+import UnderLine from "./UnderLine";
+import DashedUnderLine from "./DashedUnderLine";
+import Center from "./Center";
+import HighLight from "./HighLight";
 
-export default (props) => {
+export default props => {
   switch (props.name) {
     case "copy":
       return <Copy {...props} />;
@@ -96,6 +100,14 @@ export default (props) => {
       return <Quote {...props} />;
     case "table":
       return <Table {...props} />;
+    case "underline":
+      return <UnderLine {...props} />;
+    case "dashedUnderline":
+      return <DashedUnderLine {...props} />;
+    case "center":
+      return <Center {...props} />;
+    case "highLight":
+      return <HighLight {...props} />;
     default:
       return <svg />;
   }

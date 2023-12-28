@@ -1,11 +1,15 @@
-import React, {Component} from "react";
-import {observer, inject} from "mobx-react";
+import React, { Component } from "react";
+import { observer, inject } from "mobx-react";
 import classnames from "classnames";
 
 import Bold from "../component/Toolbar/Bold";
 import Code from "../component/Toolbar/Code";
 import Del from "../component/Toolbar/Del";
 import Italic from "../component/Toolbar/Italic";
+import UnderLine from "../component/Toolbar/UnderLine";
+import DashedUnderLine from "../component/Toolbar/DashedUnderLine";
+import HighLight from "../component/Toolbar/HighLight";
+import Center from "../component/Toolbar/Center";
 import Link from "../component/Toolbar/Link";
 import Table from "../component/Toolbar/Table";
 import Image from "../component/Toolbar/Image";
@@ -20,10 +24,10 @@ import "./Navbar.css";
 @observer
 class Toolbar extends Component {
   render() {
-    const {token} = this.props;
+    const { token } = this.props;
     const niceNavbarClass = classnames({
       "nice-navbar": true,
-      "nice-toolbar": true,
+      "nice-toolbar": true
     });
     return (
       <div className={niceNavbarClass}>
@@ -31,6 +35,10 @@ class Toolbar extends Component {
           <Del />
           <Bold />
           <Italic />
+          <UnderLine />
+          <DashedUnderLine />
+          <HighLight />
+          <Center />
           <Code />
           <InlineCode />
           <Link />
